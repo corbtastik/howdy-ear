@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <!--
+        This pom builds the EAR artifact and includes the EJB and Web modules.
+    -->
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.corbs</groupId>
+        <artifactId>howdy-ear</artifactId>
+        <version>1.0.0.SNAP</version>
+    </parent>
+    <artifactId>howdy-ear-pkg</artifactId>
+    <packaging>ear</packaging>
+    <name>howdy-ear-pkg</name>
+    <description>This project demonstrates how to package an EJB and WAR in an EAR; this is the EAR POM file</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.corbs</groupId>
+            <artifactId>howdy-ejb</artifactId>
+            <version>1.0.0.SNAP</version>
+            <type>ejb</type>
+        </dependency>
+        <!-- Dependencies on the EJB and Web modules so that they can be found by the EAR plug-in -->
+        <dependency>
+            <groupId>io.corbs</groupId>
+            <artifactId>howdy-web</artifactId>
+            <version>1.0.0.SNAP</version>            
+            <type>war</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.parent.artifactId}</finalName>
+        <plugins>
+            <!-- EAR plug-in -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>3.0.1</version>
+                <!-- configuring the EAR plug-in -->
+                <configuration>
+                    <!-- Tell Maven we are using Java EE -->
+                    <version>7</version>
+                    <!-- Use Java EE ear libraries as needed. Java EE ear libraries
+                        are in easy way to package any libraries needed in the ear, and automatically
+                        have any modules (EJB-JARs and WARs) use them -->
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <modules>
+                        <!-- Default context root of the web app is /ejb-in-ear-web.
+                        If a custom context root is needed, uncomment the following snippet to
+                        register our War as a web module and set the contextRoot property -->
+                        <webModule>
+                            <groupId>io.corbs</groupId>
+                            <artifactId>howdy-web</artifactId>
+                            <contextRoot>/howdy-web</contextRoot>
+                        </webModule>
+                    </modules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

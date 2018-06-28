@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <artifactId>howdy-ear</artifactId>
+    <groupId>io.corbs</groupId>
+    <version>1.0.0.SNAP</version>
+    <packaging>pom</packaging>
+    <name>howdy-ear</name>
+    <description>This project demonstrates how to package an EJB and WAR in an EAR; this is the top level POM file</description>
+
+    <modules>
+        <module>ejb</module>
+        <module>web</module>
+        <module>ear</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Define the version of the EJB jar so that we don't need
+                to repeat ourselves in every module -->
+            <dependency>
+                <groupId>io.corbs</groupId>
+                <artifactId>ear-ejb</artifactId>
+                <version>${project.version}</version>
+                <type>ejb</type>
+            </dependency>
+
+            <!-- Define the version of the WAR so that we don't need to repeat
+                ourselves in every module -->
+            <dependency>
+                <groupId>io.corbs</groupId>
+                <artifactId>ear-web</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+</project>
