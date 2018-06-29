@@ -25,5 +25,5 @@ Contains a maven-ear plugin build to package the EJB and Web modules into a plai
 1. Clone ``https://github.com/corbtastik/howdy-ear.git``
 2. Install [openliberty](https://openliberty.io/downloads/)
 3. Create defaultServer ``${wlp.install.dir}/bin/server create``
-2. Set vars in [env.sh](#ear/src/main/bash/env.sh) for your environment
-4. Run [build.sh](#ear/src/main/bash/build.sh)
+2. Set vars in [env.sh](#/blob/master/ear/src/main/bash/env.sh) for your environment
+4. Run [build.sh](#/blob/master/ear/src/main/bash/build.sh)
