@@ -5,7 +5,7 @@ applications:
   routes:
   - route: ((app.route))
   path: ((app.artifact))
-  buildpack: java_buildpack
+  buildpack: ((app.buildpack))
   env:
     ((env-key-1)): ((env-val-1))
     ((env-key-2)): ((env-val-2))
