@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.corbs</groupId>
-        <artifactId>howdy-ear</artifactId>
+        <artifactId>howdy-app</artifactId>
         <version>1.0.0.SNAP</version>
     </parent>
-    <artifactId>howdy-ear-pkg</artifactId>
+    <artifactId>howdy-ear</artifactId>
     <packaging>ear</packaging>
-    <name>howdy-ear-pkg</name>
+    <name>howdy-ear</name>
     <description>Howdy Ear Packaging, packs up ejb, war modules as an ear</description>
 
     <dependencies>

@@ -1,0 +1,1 @@
+assets placed in this directory will be on classpath for ejb and war modules to use

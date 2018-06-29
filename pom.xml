@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     
-    <artifactId>howdy-ear</artifactId>
+    <artifactId>howdy-app</artifactId>
     <groupId>io.corbs</groupId>
     <version>1.0.0.SNAP</version>
     <packaging>pom</packaging>
-    <name>howdy-ear</name>
+    <name>howdy-app</name>
     <description>This project demonstrates how to package an EJB and WAR in an EAR; this is the top level POM file</description>
 
     <modules>

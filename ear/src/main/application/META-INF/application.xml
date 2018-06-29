@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/application_7.xsd" version="7">
+    <description>Howdy Ear Packaging, packs up ejb, war modules as an ear</description>
+    <display-name>howdy-ear</display-name>
+    <module>
+        <web>
+            <web-uri>io.corbs-howdy-web-1.0.0.SNAP.war</web-uri>
+            <context-root>/howdy-web</context-root>
+        </web>
+    </module>
+    <module>
+        <ejb>io.corbs-howdy-ejb-1.0.0.SNAP.jar</ejb>
+    </module>
+    <library-directory>lib</library-directory>
+</application>

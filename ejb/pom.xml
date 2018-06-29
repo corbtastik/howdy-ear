@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.corbs</groupId>
-        <artifactId>howdy-ear</artifactId>
+        <artifactId>howdy-app</artifactId>
         <version>1.0.0.SNAP</version>
     </parent>
     <artifactId>howdy-ejb</artifactId>    

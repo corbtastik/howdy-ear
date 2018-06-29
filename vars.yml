@@ -1,10 +1,10 @@
 app:
   name: howdy-ear
-  artifact: ear/target/howdy-ear.ear
+  artifact: ear/target/howdy-app.ear
   memory: 1G
   route: howdy-ear.cfapps.io
   buildpack: https://github.com/cloudfoundry/ibm-websphere-liberty-buildpack
 env-key-1: IBM_JVM_LICENSE
-env-val-1: L-PMAA-A3Z8P2
+env-val-1: L-SMKR-AVSEUH
 env-key-2: IBM_LIBERTY_LICENSE
-env-val-2: L-CTUR-AVDTCN
+env-val-2: L-CTUR-AYBK6Z
