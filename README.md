@@ -19,7 +19,3 @@ Contains a Named RequestScoped Bean "howdy", that has the client interface for H
 ### Howdy EAR project
 
 Contains a maven-ear plugin build to package the EJB and Web modules into a plain ole ear :ear: file containing an application.xml and /libs folder.
-
-
-* web/ - Howdy 
-* ear/
