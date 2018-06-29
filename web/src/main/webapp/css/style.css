@@ -1,0 +1,16 @@
+body {
+    font-size: 1.5em;
+    line-height: 1.6;
+    font-weight: 400;
+    font-family: 'Open Sans', sans-serif;
+    color: #D4FDFF;
+    margin: 15px;
+    background: #018673;
+}
+input {
+    border: 0 solid;
+    color: #0266AC;
+}
+button {
+    border: 0 solid;
+}

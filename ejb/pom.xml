@@ -1,35 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>io.corbs</groupId>
         <artifactId>howdy-ear</artifactId>
         <version>1.0.0.SNAP</version>
     </parent>
-
     <artifactId>howdy-ejb</artifactId>    
     <packaging>jar</packaging>
     <name>howdy-ejb</name>
-    <description>This project demonstrates how to package an EJB and WAR in an EAR; this is the EJB POM file</description>
+    <description>Howdy EJB Module</description>
 
     <dependencies>
-
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>javax.ejb</groupId>
             <artifactId>javax.ejb-api</artifactId>
             <version>3.2</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
 
 </project>

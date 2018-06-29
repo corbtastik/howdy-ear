@@ -10,17 +10,21 @@
     <artifactId>howdy-web</artifactId>
     <packaging>war</packaging>
     <name>howdy-web</name>
-    <description>This project demonstrates how to package an EJB and WAR in an EAR; this is the WAR POM file</description>
+    <description>Howdy Web, a good ole war module</description>
 
     <dependencies>
-        <!-- Import the CDI API, we use provided scope as the API is included in JBoss EAP -->
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
             <version>2.0</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Import the ejb project so that the JSF managed bean can use the EJB -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>io.corbs</groupId>
             <artifactId>howdy-ejb</artifactId>
