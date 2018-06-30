@@ -28,7 +28,16 @@ Contains a maven-ear plugin build to package the EJB and Web modules into a plai
 1. Set vars in [env.sh](ear/src/main/bash/env.sh) for your environment
 1. Run [build.sh](ear/src/main/bash/build.sh)
 
+## Packaging App w/ Liberty Server
 
+Liberty Directory Push...awe yeah (kinda).
+
+```bash
+cd ear/src/main/bash
+# edit env.sh with your deets
+./build.sh
+./deploy.sh
+```
 
 ## Running on PAS  
 
