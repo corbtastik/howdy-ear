@@ -23,7 +23,25 @@ Contains a maven-ear plugin build to package the EJB and Web modules into a plai
 ## Dev Environment Setup
 
 1. Clone ``https://github.com/corbtastik/howdy-ear.git``
-2. Install [openliberty](https://openliberty.io/downloads/)
-3. Create defaultServer ``${wlp.install.dir}/bin/server create``
-2. Set vars in [env.sh](ear/src/main/bash/env.sh) for your environment
-4. Run [build.sh](ear/src/main/bash/build.sh)
+1. Install [openliberty](https://openliberty.io/downloads/)
+1. Create defaultServer ``${wlp.install.dir}/bin/server create``
+1. Set vars in [env.sh](ear/src/main/bash/env.sh) for your environment
+1. Run [build.sh](ear/src/main/bash/build.sh)
+
+
+
+## Running on PAS  
+
+Push from the top-level directory of this project  
+
+```bash
+> cf push --vars-file=./vars.yml
+```
+
+### References
+
+1. [Liberty Directory Locations](https://www.ibm.com/support/knowledgecenter/en/SSEQTP_liberty/com.ibm.websphere.wlp.doc/ae/rwlp_dirs.html)  
+2. [Liberty Downloads](https://openliberty.io/downloads/)  
+3. [Adding libraries to EAR /lib](https://www.ibm.com/support/knowledgecenter/en/SSHR6W/com.ibm.websphere.wdt.doc/topics/add_libs_to_ear_lib_dir.html)  
+4. [Liberty Buildpack - server.xml](https://github.com/cloudfoundry/ibm-websphere-liberty-buildpack/blob/master/docs/server-xml-options.md)  
+5. [Options for pushing Liberty Apps](https://console.bluemix.net/docs/runtimes/liberty/optionsForPushing.html#options_for_pushing)  
