@@ -24,4 +24,6 @@
     <httpDispatcher enableWelcomePage='false'/>
     <applicationMonitor dropinsEnabled='false' updateTrigger='mbean'/>
     <config updateTrigger='mbean'/>
+    <!-- custom includes -->
+    <include location='howdy-vars.xml'/>
 </server>

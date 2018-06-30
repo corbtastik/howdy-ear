@@ -40,6 +40,6 @@ env-val-2: ${IBM_LIBERTY_LICENSE}" > ${BUILD_DIR}/${SERVER_NAME}/vars.yml
 
 # change into deployment target
 cd ${BUILD_DIR}/${SERVER_NAME}/
-ls
+
 # cf push awe yeah...
-cf push --vars-file=./vars.yml
+# cf push --vars-file=./vars.yml
