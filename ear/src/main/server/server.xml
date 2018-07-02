@@ -15,15 +15,14 @@
         <feature>servlet-3.1</feature>
         <feature>websocket-1.1</feature>
     </featureManager>
-    <application name='howdy-ear' location='howdy-ear.ear' type='ear'/>
+    <!-- our custom application -->
+    <application name='howdy-app' location='howdy-app.ear' type='ear'/>
     <cdi12 enableImplicitBeanArchives='false'/>
     <httpEndpoint id='defaultHttpEndpoint' host='*' httpPort='${port}'/>
     <webContainer trustHostHeaderPort='true' extractHostHeaderPort='true'/>
     <include location='runtime-vars.xml'/>
-    <logging logDirectory='${application.log.dir}' consoleLogLevel='DEBUG'/>
+    <logging logDirectory='${application.log.dir}' consoleLogLevel='INFO'/>
     <httpDispatcher enableWelcomePage='false'/>
     <applicationMonitor dropinsEnabled='false' updateTrigger='mbean'/>
     <config updateTrigger='mbean'/>
-    <!-- custom includes -->
-    <include location='howdy-vars.xml'/>
 </server>

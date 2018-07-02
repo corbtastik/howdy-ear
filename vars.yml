@@ -5,6 +5,6 @@ app:
   route: howdy-ear.cfapps.io
   buildpack: https://github.com/cloudfoundry/ibm-websphere-liberty-buildpack
 env-key-1: IBM_JVM_LICENSE
-env-val-1: L-SMKR-AVSEUH
+env-val-1:
 env-key-2: IBM_LIBERTY_LICENSE
-env-val-2: L-CTUR-AYBK6Z
+env-val-2: 

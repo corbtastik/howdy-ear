@@ -47,6 +47,56 @@ Push from the top-level directory of this project
 > cf push --vars-file=./vars.yml
 ```
 
+## Typical start command
+
+```bash
+.liberty/create_vars.rb wlp/usr/servers/defaultServer/runtime-vars.xml \
+    && .liberty/calculate_memory.rb \
+    && WLP_SKIP_MAXPERMSIZE=true \
+    JAVA_HOME="$PWD/.java" \
+    WLP_USER_DIR="$PWD/wlp/usr" \
+    exec .liberty/bin/server run defaultServer
+```
+
+```bash
+vcap@6318cc70-7f57-4fa5-7434-3154:~/app/wlp/usr/servers/defaultServer$ ls -al
+total 12
+drwxr-xr-x 7 vcap vcap  133 Jul  2 13:20 .
+drwxr-xr-x 3 vcap vcap   27 Jul  2 13:18 ..
+drwxr-xr-x 3 vcap vcap   23 Jul  2 13:18 apps
+-rw-r--r-- 1 vcap vcap  554 Jul  2 13:19 jvm.options
+drwxr-xr-x 2 vcap vcap    6 Jul  2 13:18 lib
+drwxr-x--- 3 vcap vcap   39 Jul  2 13:19 logs
+-rw-r--r-- 1 vcap vcap  473 Jul  2 13:19 runtime-vars.xml
+-rw-r--r-- 1 vcap vcap 1142 Jul  2 13:18 server.xml
+drwxr-x--- 4 vcap vcap   39 Jul  2 13:20 tranlog
+drwxr-x--- 5 vcap vcap  115 Jul  2 13:19 workarea
+```
+
+```bash
+vcap@b02773e4-9bdb-4496-5a23-719f:~/app/wlp/usr/servers/defaultServer$ ls -al
+total 28
+drwxr-xr-x 10 vcap vcap  284 Jul  2 13:47 .
+drwxr-xr-x  3 vcap vcap   27 Jul  2 13:46 ..
+drwxr-xr-x  2 vcap vcap   66 Jul  2 07:57 ${application.log.dir}
+drwxr-xr-x  3 vcap vcap   27 Jul  2 13:46 apps
+drwxr-xr-x  2 vcap vcap    6 Jul  2 07:46 dropins
+-rwxr--r--  1 vcap vcap   81 Jul  2 08:45 howdy-vars.xml
+-rw-r--r--  1 vcap vcap  554 Jul  2 13:47 jvm.options
+drwxr-xr-x  2 vcap vcap    6 Jul  2 13:46 lib
+drwxr-x---  3 vcap vcap   39 Jul  2 13:47 logs
+drwxr-xr-x  3 vcap vcap   26 Jul  2 13:46 messaging
+drwxr-xr-x  3 vcap vcap   22 Jun 29 23:06 resources
+-rw-r--r--  1 vcap vcap  485 Jul  2 13:47 runtime-vars.xml
+-rwxr--r--  1 vcap vcap   67 Jun 29 23:06 server.env
+-rwxr--r--  1 vcap vcap 1264 Jul  2 13:46 server.xml
+-rwxr--r--  1 vcap vcap 1222 Jul  2 08:45 server.xml.backup
+-rwxr--r--  1 vcap vcap 1222 Jul  2 13:46 server.xml.org
+drwxr-xr-x  5 vcap vcap  115 Jul  2 13:47 workarea
+```
+
+
+
 ### References
 
 1. [Liberty Directory Locations](https://www.ibm.com/support/knowledgecenter/en/SSEQTP_liberty/com.ibm.websphere.wlp.doc/ae/rwlp_dirs.html)  
