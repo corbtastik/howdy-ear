@@ -161,7 +161,7 @@ Just for sanity let's do a fresh build.
 
 This places the EAR file in ``ear/target``.
 
-### [Package] (ear/src/main/bash/package.sh) Liberty Server
+### [Package](ear/src/main/bash/package.sh) Liberty Server
 
 ```bash
 > cd ear/src/main/bash
