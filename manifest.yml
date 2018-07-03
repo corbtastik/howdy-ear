@@ -2,8 +2,7 @@
 applications:
 - name: ((app.name))
   memory: ((app.memory))
-  routes:
-  - route: ((app.route))
+  random-route: true
   path: ((app.artifact))
   buildpack: ((app.buildpack))
   env:

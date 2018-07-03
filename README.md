@@ -18,7 +18,86 @@ Contains a Named RequestScoped Bean "howdy", that has the client interface for H
 
 ### Howdy EAR project
 
-Contains a maven-ear plugin build to package the EJB and Web modules into a plain ole ear :ear: file containing an application.xml and /libs folder.
+Contains a maven-ear plugin build to package the EJB and Web modules into a plain ole ear :ear: file containing an application.xml and ``/lib`` folder.
+
+### Clone, Build and Push
+
+#### Clone and Build  
+
+```bash
+> git clone git@github.com:corbtastik/howdy-ear.git
+> cd howdy-ear
+> ./mvnw clean package
+# what a standard EAR package looks like
+> jar -tvf ear/target/howdy-app.ear  
+    lib/
+    lib/README.md
+    META-INF/
+    META-INF/application.xml  
+    META-INF/MANIFEST.MF
+    META-INF/maven/
+    META-INF/maven/io.corbs/
+    META-INF/maven/io.corbs/howdy-ear/
+    META-INF/maven/io.corbs/howdy-ear/pom.properties  
+    META-INF/maven/io.corbs/howdy-ear/pom.xml
+    io.corbs-howdy-web-1.0.0.SNAP.war
+    io.corbs-howdy-ejb-1.0.0.SNAP.jar
+```
+
+#### Push to Cloud Foundry
+
+First you need to login to your Cloud Foundry environment or get an account on [Pivotal Web Services](https://run.pivotal.io/).
+
+##### Login to Cloud Foundry
+
+Login to Cloud Foundry with your information (replace ``CF_*`` values).
+
+```bash
+# using pivotal web services
+> cf login -a api.run.pivotal.io -u ${CF_USER} -o ${CF_ORG} -s ${CF_SPACE}
+```
+
+##### vars.yml
+
+Manually edit ``vars.yml`` and add values for ``IBM_JVM_LICENSE`` and ``IBM_LIBERTY_LICENSE``.  Information on how to get those values can be found [here](https://github.com/cloudfoundry/ibm-websphere-liberty-buildpack#usage).
+
+```yml
+app:
+  name: howdy-ear-green
+  artifact: ear/target/howdy-app.ear
+  memory: 1G
+  buildpack: https://github.com/cloudfoundry/ibm-websphere-liberty-buildpack
+env-key-1: IBM_JVM_LICENSE
+env-val-1: ???
+env-key-2: IBM_LIBERTY_LICENSE
+env-val-2: ???
+```
+
+Once ``cf login`` and licensing is taken care of we can ``cf push`` (awe yeah).
+
+```bash
+# using pivotal web services
+> cf push --vars-file=./vars.yml
+
+> cf app howdy-ear-green
+Showing health and status for app howdy-ear-green in org NY / space corbs ...
+
+name:              howdy-ear-green
+requested state:   started
+instances:         1/1
+usage:             1G x 1 instances
+routes:            howdy-ear-green-restless-gecko.cfapps.io
+buildpack:         https://github.com/cloudfoundry/ibm-websphere-liberty-buildpack
+
+     state     since                  cpu    memory       disk         details
+#0   running   2018-07-03T16:10:58Z   0.5%   167M of 1G   284M of 1G 
+```
+
+Access the ``web`` module under the context ``/howdy-web``.
+
+<p align="center">
+  <img src="https://github.com/corbtastik/todos-images/blob/master/todos-ear/howdy-ear.png" width="400">
+</p>
 
 ## Dev Environment Setup
 
