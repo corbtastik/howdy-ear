@@ -99,6 +99,12 @@ Access the ``web`` module under the context ``/howdy-web``.
   <img src="https://github.com/corbtastik/todos-images/blob/master/todos-ear/howdy-ear.png" width="400">
 </p>
 
+"Say Howdy" to send a message to a named ``@RequestScoped`` bean (``"howdy"``) which in-turn makes an EJB call to actually handle the request.
+
+<p align="center">
+  <img src="https://github.com/corbtastik/todos-images/blob/master/todos-ear/howdy-ear-message.png" width="400">
+</p>
+
 ## Dev Environment Setup
 
 1. Clone ``https://github.com/corbtastik/howdy-ear.git``
