@@ -1,8 +1,7 @@
 #!/bin/bash
-# boy oh boy lets package yo
 source ./env.sh
 
-${LIBERTY_HOME}/bin/server stop
+${LIBERTY_HOME}/bin/server stop ${LIBERTY_SERVER_NAME} 
 
 # remove prior server setup
 echo Removing old server ${LIBERTY_SERVER_HOME}
@@ -38,7 +37,6 @@ echo "app:
   name: ${APP_NAME}
   artifact: ${LIBERTY_SERVER_NAME}.zip
   memory: 1G
-  route: ${APP_NAME}.cfapps.io
   buildpack: https://github.com/cloudfoundry/ibm-websphere-liberty-buildpack
 env-key-1: IBM_JVM_LICENSE
 env-val-1: ${IBM_JVM_LICENSE}
@@ -47,5 +45,5 @@ env-val-2: ${IBM_LIBERTY_LICENSE}" > ${BUILD_DIR}/${LIBERTY_SERVER_NAME}/vars.ym
 
 # change into deployment target
 cd ${BUILD_DIR}/${LIBERTY_SERVER_NAME}/
-# show zip content
-jar -tvf ${LIBERTY_SERVER_NAME}.zip
+echo "${LIBERTY_SERVER_NAME}.zip contents: "
+unzip -Z1 ${LIBERTY_SERVER_NAME}.zip

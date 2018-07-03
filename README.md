@@ -105,82 +105,128 @@ Access the ``web`` module under the context ``/howdy-web``.
   <img src="https://github.com/corbtastik/todos-images/blob/master/todos-ear/howdy-ear-message.png" width="400">
 </p>
 
-## Dev Environment Setup
+## WebSphere Liberty Specifics
 
-1. Clone ``https://github.com/corbtastik/howdy-ear.git``
-1. Install [openliberty](https://openliberty.io/downloads/)
-1. Create defaultServer ``${wlp.install.dir}/bin/server create``
-1. Set vars in [env.sh](ear/src/main/bash/env.sh) for your environment
-1. Run [build.sh](ear/src/main/bash/build.sh)
+In the [Push to Cloud Foundry](#push-to-cloud-foundry) section we pushed a simple EAR with one war and ejb module with little to no effort.  EAR to Cloud fast track so to speak...that came with accepting how the default Liberty container gets crafted, namely we accept the ``server.xml`` [defaults](https://github.com/cloudfoundry/ibm-websphere-liberty-buildpack/blob/master/docs/server-xml-options.md).  There's a lot of value in developing around the default fast track but if you want more control over how Liberty is crafted there's essentially 2 options.
 
-## Packaging App w/ Liberty Server
+1. Push a supported Liberty Server **Zip**
+1. Push a supported Liberty Server **Directory**
 
-Packaging for Liberty buildpack
+The instructions and bash scripts included talk about and support option 1, pushing a zipped Liberty Server.  This is a little more ops friendly in the sense we control what gets zipped whereas pushing the Server Directory lends itself to picking up cruft.  [Cruft](https://en.wikipedia.org/wiki/Cruft) is bad.  
+
+### Install [openliberty](https://openliberty.io/downloads/)
+
+On my local machine I've installed liberty in ``~/dev/openlibery/wlp`` but you can install anywhere or you can unzip a fresh openliberty distro each time you want to run this package process.
+
+The package process below will remove prior installs of ``howdy-server`` by design.
+
+### Set vars in [env.sh](ear/src/main/bash/env.sh) for your environment
+
+To package a Liberty Server Zip perform the following steps, again note the need to provide values for ``IBM_JVM_LICENSE`` and ``IBM_LIBERTY_LICENSE``.
 
 ```bash
-cd ear/src/main/bash
-# edit env.sh with your deets
-./build.sh
-./package.sh
+#!/bin/bash
+APP_NAME=howdy-ear-green
+PROJECT_HOME=${HOME}/dev/github/howdy-ear
+BUILD_DIR=${PROJECT_HOME}/ear/target
+LIBERTY_HOME=${HOME}/dev/openliberty/wlp
+LIBERTY_SERVER_NAME=howdy-server
+LIBERTY_SERVER_HOME=${LIBERTY_HOME}/usr/servers/${LIBERTY_SERVER_NAME}
+IBM_JVM_LICENSE=???
+IBM_LIBERTY_LICENSE=???
 ```
 
-## Running on PAS  
+### [Build](ear/src/main/bash/build.sh) Howdy EAR
 
-Push from the top-level directory of this project  
+Just for sanity let's do a fresh build.
 
 ```bash
+> cd ear/src/main/bash
+> ./build.sh
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] howdy-app .......................................... SUCCESS [  0.103 s]
+[INFO] howdy-ejb .......................................... SUCCESS [  0.772 s]
+[INFO] howdy-web .......................................... SUCCESS [  0.229 s]
+[INFO] howdy-ear .......................................... SUCCESS [  0.280 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1.463 s
+[INFO] Finished at: 2018-07-03T12:53:29-05:00
+[INFO] Final Memory: 25M/484M
+[INFO] ------------------------------------------------------------------------
+```
+
+This places the EAR file in ``ear/target``.
+
+### [Package] (ear/src/main/bash/package.sh) Liberty Server
+
+```bash
+> cd ear/src/main/bash
+> ./package.sh
+Stopping server howdy-server.
+Server howdy-server is not running.
+Removing old server /Users/corbs/dev/openliberty/wlp/usr/servers/howdy-server
+Server howdy-server created.
+Deploying to /Users/corbs/dev/openliberty/wlp/usr/servers/howdy-server/apps
+cp: /Users/corbs/dev/github/howdy-ear/ear/src/main/server/runtime-vars.xml: No such file or directory
+Packaging server howdy-server.
+Server howdy-server package complete in /Users/corbs/dev/openliberty/wlp/usr/servers/howdy-server/howdy-server.zip.
+howdy-server.zip contents:  
+wlp/usr/servers/howdy-server/
+wlp/usr/servers/howdy-server/server.xml
+wlp/usr/servers/howdy-server/server.env
+wlp/usr/servers/howdy-server/apps/
+wlp/usr/servers/howdy-server/apps/howdy-app.ear
+```
+
+#### Packed Liberty Server
+
+This places our custom Liberty Server ``howdy-server`` in ``ear/target/howdy-server/``.  Here's that directory after running ``package.sh``.
+
+```bash
+> ls -al ear/target/howdy-server/
+howdy-server.zip
+manifest.yml
+vars.yml
+```
+
+### cf push (awe yeah)
+
+Now we just need to cf push the zip file, everything is setup in ``manifest.yml`` and ``vars.yml`` files.
+
+```bash
+> cd ear/target/howdy-server/
 > cf push --vars-file=./vars.yml
 ```
 
-## Typical start command
+### Typical Liberty Server start command
+
+Minus Cruft :wink:
 
 ```bash
-.liberty/create_vars.rb wlp/usr/servers/defaultServer/runtime-vars.xml \
-    && .liberty/calculate_memory.rb \
-    && WLP_SKIP_MAXPERMSIZE=true \
-    JAVA_HOME="$PWD/.java" \
-    WLP_USER_DIR="$PWD/wlp/usr" \
-    exec .liberty/bin/server run defaultServer
+java -jar /home/vcap/app/.liberty/bin/tools/ws-server.jar howdy-server
 ```
+
+Here's what the deployment looks like in Liberty running on Cloud Foundry  
 
 ```bash
-vcap@6318cc70-7f57-4fa5-7434-3154:~/app/wlp/usr/servers/defaultServer$ ls -al
-total 12
-drwxr-xr-x 7 vcap vcap  133 Jul  2 13:20 .
-drwxr-xr-x 3 vcap vcap   27 Jul  2 13:18 ..
-drwxr-xr-x 3 vcap vcap   23 Jul  2 13:18 apps
--rw-r--r-- 1 vcap vcap  554 Jul  2 13:19 jvm.options
-drwxr-xr-x 2 vcap vcap    6 Jul  2 13:18 lib
-drwxr-x--- 3 vcap vcap   39 Jul  2 13:19 logs
--rw-r--r-- 1 vcap vcap  473 Jul  2 13:19 runtime-vars.xml
--rw-r--r-- 1 vcap vcap 1142 Jul  2 13:18 server.xml
-drwxr-x--- 4 vcap vcap   39 Jul  2 13:20 tranlog
-drwxr-x--- 5 vcap vcap  115 Jul  2 13:19 workarea
+vcap@howdy-ear-container~$ ls -al app/wlp/usr/servers/howdy-server/
+total 20
+drwxr-xr-x 7 vcap vcap  173 Jul  3 19:47 .
+drwxr-xr-x 3 vcap vcap   26 Jul  3 19:45 ..
+drwxr-xr-x 3 vcap vcap   27 Jul  3 19:45 apps
+-rw-r--r-- 1 vcap vcap  554 Jul  3 19:47 jvm.options
+drwxr-xr-x 2 vcap vcap    6 Jul  3 19:46 lib
+drwxr-x--- 3 vcap vcap   39 Jul  3 19:47 logs
+-rw-r--r-- 1 vcap vcap  500 Jul  3 19:47 runtime-vars.xml
+-rwxr--r-- 1 vcap vcap   67 Jul  3 14:32 server.env
+-rwxr--r-- 1 vcap vcap 1169 Jul  3 19:46 server.xml
+drwxr-x--- 4 vcap vcap   39 Jul  3 19:47 tranlog
+drwxr-xr-x 5 vcap vcap  115 Jul  3 19:47 workarea
 ```
-
-```bash
-vcap@b02773e4-9bdb-4496-5a23-719f:~/app/wlp/usr/servers/defaultServer$ ls -al
-total 28
-drwxr-xr-x 10 vcap vcap  284 Jul  2 13:47 .
-drwxr-xr-x  3 vcap vcap   27 Jul  2 13:46 ..
-drwxr-xr-x  2 vcap vcap   66 Jul  2 07:57 ${application.log.dir}
-drwxr-xr-x  3 vcap vcap   27 Jul  2 13:46 apps
-drwxr-xr-x  2 vcap vcap    6 Jul  2 07:46 dropins
--rwxr--r--  1 vcap vcap   81 Jul  2 08:45 howdy-vars.xml
--rw-r--r--  1 vcap vcap  554 Jul  2 13:47 jvm.options
-drwxr-xr-x  2 vcap vcap    6 Jul  2 13:46 lib
-drwxr-x---  3 vcap vcap   39 Jul  2 13:47 logs
-drwxr-xr-x  3 vcap vcap   26 Jul  2 13:46 messaging
-drwxr-xr-x  3 vcap vcap   22 Jun 29 23:06 resources
--rw-r--r--  1 vcap vcap  485 Jul  2 13:47 runtime-vars.xml
--rwxr--r--  1 vcap vcap   67 Jun 29 23:06 server.env
--rwxr--r--  1 vcap vcap 1264 Jul  2 13:46 server.xml
--rwxr--r--  1 vcap vcap 1222 Jul  2 08:45 server.xml.backup
--rwxr--r--  1 vcap vcap 1222 Jul  2 13:46 server.xml.org
-drwxr-xr-x  5 vcap vcap  115 Jul  2 13:47 workarea
-```
-
-
 
 ### References
 
