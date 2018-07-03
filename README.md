@@ -4,7 +4,7 @@ This repo contains a sample project that packages an [ejb](https://en.wikipedia.
 
 For reals its meant to be a simple starter to exploring cloud based EAR deployments using the [WebSphere Liberty Buildpack](https://github.com/cloudfoundry/ibm-websphere-liberty-buildpack).  Microservices are everywhere but its not uncommon for Dev Shops to have major investments in Monoliths, many of which started with a "simple" ejb/war ear.
 
-Having said that I see tremendous value providing simple patterns to "lift" the Monolith to the cloud by wrapping in Cloud Native principles.  Can we develop simple opinions on how a cloud based EAR deployment should look?  You bet...the value is this...your code isn't throw away, its leveled-up, packaging remains an ``ear`` but what we package for the cloud is different.  Then obviously the workload runs different in the sense it goes from JEE cluster to Cloud based on a runtime such as Pivotal Application Service.
+Having said that I see tremendous value providing simple patterns to "lift" the Monolith to the cloud by sprinkling in Cloud Native principles.  
 
 ## The Code
 
